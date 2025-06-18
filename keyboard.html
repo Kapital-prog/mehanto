@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sabaische Tastatur</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<style>
+    * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #1a1a2f;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.container {
+    text-align: center;
+}
+
+textarea {
+    width: 80%;
+    height: 100px;
+    margin-bottom: 20px;
+    padding: 10px;
+    font-size: 18px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    direction: ltr; /* Standardmäßig von links nach rechts */
+}
+
+.keyboard {
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    gap: 10px;
+    justify-content: center;
+}
+
+.keyboard.rotated {
+    transform: rotate(90deg); /* Alle Tasten um 90 Grad drehen, wenn die Richtung geändert wird */
+}
+
+.key {
+    padding: 20px;
+    font-size: 24px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.key:hover {
+    background-color: #e2e2e2;
+}
+
+.key:active {
+    background-color: #ccc;
+}
+/* Stil für die Rücktaste */
+.key.backspace {
+    font-size: 20px;
+    background-color: rgb(148, 38, 38);
+    color: #ffffff;
+    font-weight: bold;
+}
+
+.key.backspace:hover {
+    background-color: #ff0000;
+}
+/* Stil für die Leerzeichen-Taste */
+.key.space {
+    font-size: 30px;
+    width:130px;
+    background-color:rgb(45, 42, 42);
+    color: #ffffff;
+}
+
+.key.space:hover {
+    background-color: #bdbdbd;
+}
+
+button#toggleDirection {
+    margin-top: 20px;
+    padding: 10px 20px;
+    font-size: 18px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button#toggleDirection:hover {
+    background-color: #010101;
+}
+
+</style>
+<body>
+    <div class="container">
+        <textarea id="output" placeholder="ዝኮነ ጽሓፍ!" readonly></textarea>
+        <div class="keyboard">
+            <button class="key">𐩠</button>
+            <button class="key">𐩡</button>
+            <button class="key">𐩢</button>
+            <button class="key">𐩣</button>
+            <button class="key">𐩤</button>
+            <button class="key">𐩥</button>
+            <button class="key">𐩦</button>
+            <button class="key">𐩧</button>
+            <button class="key">𐩨</button>
+            <button class="key">𐩩</button>
+            <button class="key">𐩪</button>
+            <button class="key">𐩫</button>
+            <button class="key">𐩬</button>
+            <button class="key">𐩭</button>
+            <button class="key">𐩮</button>
+            <button class="key">𐩯</button>
+            <button class="key">𐩰</button>
+            <button class="key">𐩱</button>
+            <button class="key">𐩲</button>
+            <button class="key">𐩳</button>
+            <button class="key">𐩴</button>
+            <button class="key">𐩵</button>
+            <button class="key">𐩶</button>
+            <button class="key">𐩷</button>
+            <button class="key">𐩸</button>
+            <button class="key">𐩹</button>
+            <button class="key">𐩺</button>
+            <button class="key">𐩻</button>
+            <button class="key">𐩼</button>
+
+             <!-- Backspace-Taste -->
+             <button class="key backspace">⌫</button>
+
+             <!-- Leerzeichen-Taste -->
+            <button id="spaceholder" class="key space">␣</button>
+
+           
+        </div>
+        
+    </div>
+
+    <script src="script.js">
+     
+
+    </script>  
+    
+    <script >
+     let isLTR = true;  // Flag, das die aktuelle Schreibrichtung verfolgt
+
+document.querySelectorAll('.key').forEach(button => {
+    button.addEventListener('click', function() {
+        const output = document.getElementById('output');
+        
+        // Wenn es eine normale Taste ist, füge das Zeichen hinzu
+        if (!this.classList.contains('backspace') && !this.classList.contains('space')) {
+            output.value += this.textContent;
+        }
+        // Wenn es die Backspace-Taste ist, lösche das letzte Zeichen
+        else if (this.classList.contains('backspace')) {
+            output.value = output.value.slice(0, -1);
+        }
+        // Wenn es die Leerzeichen-Taste ist, füge ein Leerzeichen hinzu
+        else if (this.classList.contains('space')) {
+            output.value += " ";  // Ein Leerzeichen einfügen
+        }
+    });
+});
+
+// Schreibrichtung umschalten
+document.getElementById('toggleDirection').addEventListener('click', function() {
+    const output = document.getElementById('output');
+    const keyboard = document.querySelector('.keyboard');
+    
+    // Wechsel der Schreibrichtung im Textfeld
+    if (isLTR) {
+        output.style.direction = 'rtl';  // Schreibrichtung auf von rechts nach links ändern
+    } else {
+        output.style.direction = 'ltr';  // Schreibrichtung auf von links nach rechts ändern
+    }
+
+    // Umschalten der Tastaturrotation
+    keyboard.classList.toggle('rotated');  // Drehen der Tastatur um 90 Grad
+
+    // Schreibrichtung umschalten
+    isLTR = !isLTR;
+});
+
+
+
+</script>
+</body>
+</html>
